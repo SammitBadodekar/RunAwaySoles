@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Darumadrop+One&family=Roboto+Mono:wght@500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+:root {
+  --light: #fefefe;
+  --orange: #ff5900;
+  --blue: #7b00ff;
+  --extra-dark: black;
+  --dark: #0c134f;
+  --mid: #7158bb;
+  --menu: hsla(114, 61%, 94%, 0.135);
+}
+
+body {
+  color: var(--dark);
+  font-family: "Roboto Mono", monospace;
+}
+
+.skywalkers-container {
+  background: url("../assets/shoes-img/smooth-vaporware-wave-gradient.webp")
+    center fixed;
+  background-size: cover;
+}
+.AeroRoamers-container {
+  background: url("../assets/svgs/istockphoto-1251007701-612x612.webp")
+    no-repeat fixed;
+  background-size: cover;
+}
+.Marvellous-container {
+  background: url("../assets/svgs/1812875.webp") no-repeat fixed;
+  background-size: cover;
+}
+
+.btn {
+  background-color: var(--dark);
+  color: var(--light);
+  border-radius: 0.2rem;
+  font-family: "Roboto Mono", monospace;
+}
