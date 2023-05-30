@@ -11,14 +11,20 @@ const cartStore = (set) => ({
     }));
   },
   addItems: (item) => {
-    set((state) => ({
-      items: [item, ...state.items],
-    }));
+    return new Promise((resolve) => {
+      set((state) => ({
+        items: [item, ...state.items],
+      }));
+      resolve();
+    });
   },
   removeItems: (itemId) => {
-    set((state) => ({
-      items: state.items.filter((item) => item._id !== itemId),
-    }));
+    return new Promise((resolve) => {
+      set((state) => ({
+        items: state.items.filter((item) => item._id !== itemId),
+      }));
+      resolve();
+    });
   },
   login: () => {
     Cookies.set("auth", "true", { expires: 1 });

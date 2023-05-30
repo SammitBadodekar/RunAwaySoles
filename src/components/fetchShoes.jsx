@@ -8,14 +8,10 @@ const fetchShoes = (props) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    axios
-      .get(
-        `http://runawaysoles-backend.onrender.com.onrender.com.onrender.com/${url}${name}`
-      )
-      .then((response) => {
-        setItems(response.data);
-        setIsLoading(false);
-      });
+    axios.get(`http://localhost:3000/${url}${name}`).then((response) => {
+      setItems(response.data);
+      setIsLoading(false);
+    });
   }, []);
   if (isLoading) {
     return (

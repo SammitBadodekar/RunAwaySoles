@@ -26,7 +26,7 @@ const header = () => {
     const getUserInfoAndCartItems = async () => {
       try {
         const response = await axios.get(
-          "http://runawaysoles-backend.onrender.com/auth/login/success",
+          "http://localhost:3000/auth/login/success",
           {
             withCredentials: true,
           }
@@ -37,16 +37,16 @@ const header = () => {
         }
 
         const cartResponse = await axios.get(
-          `http://runawaysoles-backend.onrender.com/users/${userInfo._id}/cartItems`
+          `http://localhost:3000/users/${userInfo._id}/cartItems`
         );
         const cartItems = cartResponse?.data[0]?.cart;
         setItems(cartItems);
       } catch (error) {
-        window.location.href = "/Error";
+        console.log("error happened at userInfo._id");
       }
     };
 
-    if (!userInfo || !userInfo._id || cartItems === []) {
+    if (!userInfo || !userInfo._id) {
       getUserInfoAndCartItems();
     }
 

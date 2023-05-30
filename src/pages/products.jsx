@@ -45,7 +45,7 @@ const products = () => {
 
   useEffect(() => {
     axios
-      .get(`http://runawaysoles-backend.onrender.com/getShoes/specific/${id}`)
+      .get(`http://localhost:3000/getShoes/specific/${id}`)
       .then((response) => {
         setShoesInfo(response.data[0]);
         setShoesImgs(
@@ -55,12 +55,9 @@ const products = () => {
       .catch((error) => console.log(error));
 
     axios
-      .get(
-        "http://runawaysoles-backend.onrender.com.onrender.com.onrender.com/auth/login/success",
-        {
-          withCredentials: true,
-        }
-      )
+      .get("http://localhost:3000/auth/login/success", {
+        withCredentials: true,
+      })
       .then((response) => {
         setUserInfo(response.data[0]);
       });
@@ -72,7 +69,7 @@ const products = () => {
       if (!isAdded && !isDuplicate) {
         const updatedCart = [object, ...cartItems];
         axios.put(
-          `http://runawaysoles-backend.onrender.com.onrender.com/users/${userInfo?._id}/updateCartItems`,
+          `http://localhost:3000/users/${userInfo?._id}/updateCartItems`,
           updatedCart
         );
         addItems(object);

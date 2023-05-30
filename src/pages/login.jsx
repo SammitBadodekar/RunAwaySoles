@@ -9,21 +9,29 @@ const login = () => {
   const authStatus = useStore((state) => state.auth);
   const [userInfo, setUserInfo] = useState([]);
   useEffect(() => {
-    axios
-      .get("http://runawaysoles-backend.onrender.com/auth/login/success", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setUserInfo(response.data[0]);
-      })
-      .catch((error) => console.log(error));
+    let isMounted = true;
+    const fetchUser = () => {
+      axios
+        .get("http://localhost:3000/auth/login/success", {
+          withCredentials: true,
+        })
+        .then((response) => {
+          setUserInfo(response.data[0]);
+        })
+        .catch((error) => console.log(error));
+    };
+    if (!userInfo || !userInfo._id) {
+      fetchUser();
+    }
+
+    return () => {
+      isMounted = false;
+    };
   }, [userInfo]);
+
   const googleLogin = () => {
     loginSuccess();
-    window.open(
-      "http://runawaysoles-backend.onrender.com/auth/google",
-      "_self"
-    );
+    window.open("http://localhost:3000/auth/google", "_self");
   };
   const logout = () => {
     Logout();
