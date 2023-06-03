@@ -4,6 +4,7 @@ import AeroRoamersImg1 from "../assets/shoes-img/53fc98ef-63e6-45db-be33-1bc271a
 import MarvellousImg1 from "../assets/shoes-img/1683214286_7199881-transformed.png";
 import DisplayItems from "../components/displayItems";
 import FetchShoes from "../components/fetchShoes";
+import Footer from "../components/footer";
 
 const home = () => {
   const sections = [
@@ -63,6 +64,7 @@ const home = () => {
           </div>
         );
       })}
+      <Footer />
     </main>
   );
 };

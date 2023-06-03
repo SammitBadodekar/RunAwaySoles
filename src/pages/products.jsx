@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "../components/footer";
 
 const products = () => {
   const { id } = useParams();
@@ -45,7 +46,7 @@ const products = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/getShoes/specific/${id}`)
+      .get(`https://run-away-soles-backend.vercel.app/getShoes/specific/${id}`)
       .then((response) => {
         setShoesInfo(response.data[0]);
         setShoesImgs(
@@ -55,7 +56,7 @@ const products = () => {
       .catch((error) => console.log(error));
 
     axios
-      .get("http://localhost:3000/auth/login/success", {
+      .get("https://run-away-soles-backend.vercel.app/auth/login/success", {
         withCredentials: true,
       })
       .then((response) => {
@@ -65,11 +66,11 @@ const products = () => {
 
   const handleAdd = (object) => {
     if (authStatus) {
-      const isDuplicate = cartItems.some((item) => item?._id === object?._id);
+      const isDuplicate = cartItems?.some((item) => item?._id === object?._id);
       if (!isAdded && !isDuplicate) {
         const updatedCart = [object, ...cartItems];
         axios.put(
-          `http://localhost:3000/users/${userInfo?._id}/updateCartItems`,
+          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
           updatedCart
         );
         addItems(object);
@@ -88,8 +89,8 @@ const products = () => {
 
   if (shoesInfo) {
     return (
-      <div className="sm:pt-30 mx-4 flex flex-col gap-4 pt-16 sm:gap-8 ">
-        <div className="justify-center gap-8 sm:flex ">
+      <div className="sm:pt-30  flex flex-col gap-4 pt-16 sm:gap-8 ">
+        <div className="mx-4 justify-center gap-8 sm:flex">
           <Slider {...settings} className="sm:w-80">
             {shoesImgs.map((img) => {
               return (
@@ -102,7 +103,7 @@ const products = () => {
               );
             })}
           </Slider>
-          <section className="pt-4 sm:pt-28">
+          <section className=" pt-4 sm:pt-28">
             <p className="text-2xl">{shoesInfo.name}</p>
             <p className=" font-logo text-2xl">${shoesInfo.price}</p>
             <button
@@ -131,7 +132,7 @@ const products = () => {
           </section>
         </div>
 
-        <section className="grid gap-2 sm:px-28">
+        <section className="mx-4 grid gap-2 sm:px-28">
           <p>
             At RunAwaySoles, we prioritize both design and comfort. Our shoes
             are not only visually appealing but also engineered for maximum
@@ -158,7 +159,6 @@ const products = () => {
             setIsAdded(false);
             addButton.current.style.backgroundColor = "#0c134f";
           }}
-          className=" -mx-4"
         >
           <h1 className=" p-4 font-heading text-2xl sm:px-40 sm:text-4xl">
             More Shoes
@@ -170,6 +170,7 @@ const products = () => {
             key={refresh}
           />
         </section>
+        <Footer />
       </div>
     );
   }

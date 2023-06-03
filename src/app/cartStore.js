@@ -3,11 +3,24 @@ import Cookies from "js-cookie";
 
 const cartStore = (set) => ({
   items: [],
+  orders: [],
   auth: Cookies.get("auth") === "true",
+  paymentSuccess: Cookies.get("paymentSuccess") === "true",
 
   setItems: (item) => {
     set((state) => ({
       items: item,
+    }));
+  },
+  setOrders: (item) => {
+    set((state) => ({
+      orders: item,
+    }));
+  },
+  setPaymentStatus: (status) => {
+    Cookies.set("paymentSuccess", `${status}`);
+    set((state) => ({
+      paymentSuccess: status,
     }));
   },
   addItems: (item) => {
@@ -18,6 +31,7 @@ const cartStore = (set) => ({
       resolve();
     });
   },
+
   removeItems: (itemId) => {
     return new Promise((resolve) => {
       set((state) => ({

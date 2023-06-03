@@ -10,7 +10,6 @@ const cart = () => {
   const [userInfo, setUserInfo] = useState([]);
   const authStatus = useStore((state) => state.auth);
   const removeItem = useStore((state) => state.removeItems);
-  const addItem = useStore((state) => state.addItems);
   let totalPrice = useMemo(() => {
     return cartItems?.reduce(
       (acc, item) => acc + parseInt(item?.price) * item.quantity,
@@ -23,7 +22,7 @@ const cart = () => {
     let isMounted = true;
     const fetchUser = () => {
       axios
-        .get("http://localhost:3000/auth/login/success", {
+        .get("https://run-away-soles-backend.vercel.app/auth/login/success", {
           withCredentials: true,
         })
         .then((response) => {
@@ -43,57 +42,40 @@ const cart = () => {
     removeItem(id);
     const updatedCart = cartItems.filter((item) => item._id !== id);
     axios.put(
-      `http://localhost:3000/users/${userInfo?._id}/updateCartItems`,
+      `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
       updatedCart
     );
   };
-  const updateQuantity = (operation, item) => {
-    if (operation === "minus" && item.quantity === 1) return;
 
-    if (operation === "minus") {
-      const newQuantity = item.quantity - 1;
-      const updatedItem = {
-        name: item.name,
-        img: item.img,
-        _id: item._id,
-        price: item.price,
-        quantity: newQuantity,
-      };
-      removeItem(item._id);
-      addItem(updatedItem);
-      axios.put(
-        `http://localhost:3000/users/${userInfo?._id}/updateCartItems`,
+  const checkOut = async () => {
+    axios
+      .post(
+        `https://run-away-soles-backend.vercel.app/create-checkout-session`,
         cartItems
-      );
-    }
-    if (operation === "plus") {
-      const newQuantity = item.quantity + 1;
-      const updatedItem = {
-        name: item.name,
-        img: item.img,
-        _id: item._id,
-        price: item.price,
-        quantity: newQuantity,
-      };
-      removeItem(item._id);
-      addItem(updatedItem);
-      axios.put(
-        `http://localhost:3000/users/${userInfo?._id}/updateCartItems`,
-        cartItems
-      );
-    }
+      )
+      .then((response) => {
+        window.location.href = response.data.url;
+      });
   };
 
   if (authStatus) {
     return (
-      <section className="bg-light-0 p-3 pb-20 pt-20 sm:m-12 sm:h-screen sm:rounded-3xl">
-        <h1>Hi {userInfo.username} </h1>
+      <section className="bg-light-0 p-3 pb-20 pt-20 sm:m-12 sm:h-screen sm:rounded-3xl sm:pt-16">
+        <article className=" sm: rounded-xl bg-slate-200 p-4 font-paragraph text-xs sm:text-base">
+          <p>
+            Use Card: <span className=" font-heading">4242 4242 4242 4242</span>{" "}
+            to get{" "}
+            <span className=" font-logo text-xl  sm:text-2xl"> 100% </span>off
+          </p>
+          <p>Country: United States</p>
+          <p>Any CVV and Address</p>
+        </article>
         <div className="grid gap-4 p-1 pt-4 sm:grid-cols-2 sm:p-10">
           {cartItems?.map((item) => {
             return (
               <article
                 key={item?._id}
-                className="flex gap-4 rounded-lg p-1 align-middle shadow-lg"
+                className="relative flex gap-4 rounded-lg p-1 align-middle shadow-lg"
                 onClick={useScrollToTop}
               >
                 <Link to={`/products/${item?._id}`}>
@@ -103,46 +85,35 @@ const cart = () => {
                     className=" h-20 w-16 rounded-md object-cover"
                   />
                 </Link>
-
-                <div>
+                <div className="flex flex-col ">
                   <Link to={`/products/${item?._id}`}>
                     <p>{item?.name}</p>
                   </Link>
-
                   <h2 className=" font-logo">${item?.price}</h2>
-                  <section className="flex  items-center justify-between pt-3 leading-3 sm:pt-4">
-                    <div className="flex gap-1 ">
-                      <button
-                        className="btn  p-1 "
-                        onClick={() => updateQuantity("minus", item)}
-                      >
-                        -
-                      </button>
-                      <p>{item?.quantity}</p>
-                      <button
-                        className="btn p-1"
-                        onClick={() => updateQuantity("plus", item)}
-                      >
-                        +
-                      </button>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        deleteItem(item?._id);
-                      }}
-                    >
-                      <img src={deleteSvg} alt="" className=" w-6 pt-2" />
-                    </button>
-                  </section>
-                </div>
+                </div>{" "}
+                <button
+                  onClick={() => {
+                    deleteItem(item?._id);
+                  }}
+                  className=" absolute bottom-2 right-2"
+                >
+                  <img src={deleteSvg} alt="" className=" w-6 " />
+                </button>
               </article>
             );
           })}
         </div>
-        <h2 className=" fixed bottom-0 w-screen bg-light-0 p-2">
-          Total:<span className=" font-logo text-3xl"> ${totalPrice}</span>{" "}
-        </h2>
+        <div className="fixed bottom-0 left-0 right-0 flex justify-between bg-light-0 p-2">
+          <h2>
+            Total:<span className=" font-logo text-3xl"> ${totalPrice}</span>
+          </h2>
+          <button
+            className={`btn p-2 ${cartItems?.length === 0 ? "hidden" : ""}`}
+            onClick={checkOut}
+          >
+            Check Out
+          </button>
+        </div>
       </section>
     );
   }

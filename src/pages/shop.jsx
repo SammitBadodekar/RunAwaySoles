@@ -1,4 +1,5 @@
 import FetchShoes from "../components/fetchShoes";
+import Footer from "../components/footer";
 
 const shop = () => {
   return (
@@ -15,6 +16,7 @@ const shop = () => {
         Marvellous
       </h2>
       <FetchShoes name="/Marvellous" url="getShoes/all" />
+      <Footer />
     </div>
   );
 };

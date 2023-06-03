@@ -12,7 +12,7 @@ const login = () => {
     let isMounted = true;
     const fetchUser = () => {
       axios
-        .get("http://localhost:3000/auth/login/success", {
+        .get("https://run-away-soles-backend.vercel.app/auth/login/success", {
           withCredentials: true,
         })
         .then((response) => {
@@ -20,18 +20,20 @@ const login = () => {
         })
         .catch((error) => console.log(error));
     };
-    if (!userInfo || !userInfo._id) {
+    /* if (!userInfo || !userInfo._id) {
       fetchUser();
-    }
-
+    } */
+    fetchUser();
     return () => {
       isMounted = false;
     };
   }, [userInfo]);
-
   const googleLogin = () => {
     loginSuccess();
-    window.open("http://localhost:3000/auth/google", "_self");
+    window.open(
+      "https://run-away-soles-backend.vercel.app/auth/google",
+      "_self"
+    );
   };
   const logout = () => {
     Logout();

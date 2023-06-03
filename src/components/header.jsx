@@ -14,6 +14,9 @@ const header = () => {
   const cartItems = useStore((state) => state.items);
   const authStatus = useStore((state) => state.auth);
   const setItems = useStore((state) => state.setItems);
+  const setOrders = useStore((state) => state.setOrders);
+  const PaymentSuccess = useStore((state) => state.paymentSuccess);
+  const setPaymentStatus = useStore((state) => state.setPaymentStatus);
 
   const handleMenu = () => {
     setIsClicked(!isClicked);
@@ -26,21 +29,42 @@ const header = () => {
     const getUserInfoAndCartItems = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/auth/login/success",
+          "https://run-away-soles-backend.vercel.app/auth/login/success",
           {
             withCredentials: true,
           }
         );
-        const userInfo = await response.data[0];
+        const userInfo = await response?.data[0];
+        console.log(userInfo);
         if (isMounted) {
           setUserInfo(userInfo);
         }
 
         const cartResponse = await axios.get(
-          `http://localhost:3000/users/${userInfo._id}/cartItems`
+          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/cartItems`
         );
         const cartItems = cartResponse?.data[0]?.cart;
-        setItems(cartItems);
+        const orderResponse = await axios.get(
+          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/orders`
+        );
+        const orderItems = orderResponse?.data[0]?.orders;
+
+        if (PaymentSuccess) {
+          setPaymentStatus(false);
+          setOrders(orderItems);
+          setItems([]);
+          axios.put(
+            `https://run-away-soles-backend.vercel.app/users/${userInfo._id}/updateOrders`,
+            [...cartItems, ...orderItems]
+          );
+          axios.put(
+            `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
+            []
+          );
+        } else {
+          setItems(cartItems || []);
+          setOrders(orderItems || []);
+        }
       } catch (error) {
         console.log("error happened at userInfo._id");
       }
@@ -53,10 +77,10 @@ const header = () => {
     return () => {
       isMounted = false;
     };
-  }, [userInfo]);
+  }, [userInfo, PaymentSuccess]);
   return (
     <nav
-      className={`navbar fixed top-0 z-10 flex w-screen justify-between bg-light-0 px-10`}
+      className={`navbar fixed top-0 z-10 flex w-screen justify-between bg-light-0 px-10 shadow-xl`}
     >
       <Link to="/" onClick={useScrollToTop}>
         <img
@@ -73,6 +97,7 @@ const header = () => {
       >
         <Link to="/">HOME</Link>
         <Link to="/shop">SHOP</Link>
+        <Link to="/orders">{authStatus ? "ORDERS" : ""}</Link>
         <Link to="/login">{authStatus ? "PROFILE" : "LOGIN"}</Link>
       </div>
 
