@@ -7,8 +7,8 @@ import axios from "axios";
 
 const cart = () => {
   const cartItems = useStore((state) => state.items);
-  const [userInfo, setUserInfo] = useState([]);
   const authStatus = useStore((state) => state.auth);
+  const user = useStore((state) => state.user);
   const removeItem = useStore((state) => state.removeItems);
   let totalPrice = useMemo(() => {
     return cartItems?.reduce(
@@ -18,31 +18,11 @@ const cart = () => {
   }, [cartItems]);
   useScrollToTop();
 
-  useEffect(() => {
-    let isMounted = true;
-    const fetchUser = () => {
-      axios
-        .get("https://run-away-soles-backend.vercel.app/auth/login/success", {
-          withCredentials: true,
-        })
-        .then((response) => {
-          setUserInfo(response.data[0]);
-        });
-    };
-    if (!userInfo || !userInfo._id) {
-      fetchUser();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [userInfo]);
-
   const deleteItem = (id) => {
     removeItem(id);
     const updatedCart = cartItems.filter((item) => item._id !== id);
     axios.put(
-      `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
+      `https://run-away-soles-backend.vercel.app/users/${user}/updateCartItems`,
       updatedCart
     );
   };

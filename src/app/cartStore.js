@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import Cookies from "js-cookie";
+import { auth } from "../firebase/firebase";
 
 const cartStore = (set) => ({
   items: [],
+  user: Cookies.get("userId") || "",
   orders: [],
   auth: Cookies.get("auth") === "true",
   paymentSuccess: Cookies.get("paymentSuccess") === "true",
@@ -15,6 +17,12 @@ const cartStore = (set) => ({
   setOrders: (item) => {
     set((state) => ({
       orders: item,
+    }));
+  },
+  setUser: (item) => {
+    Cookies.set("userId", `${item}`);
+    set((state) => ({
+      user: item,
     }));
   },
   setPaymentStatus: (status) => {
@@ -48,6 +56,7 @@ const cartStore = (set) => ({
   },
   logout: () => {
     Cookies.remove("auth");
+    auth.signOut();
     set((state) => ({
       auth: false,
     }));

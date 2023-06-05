@@ -17,9 +17,9 @@ const products = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const addItems = useStore((state) => state.addItems);
+  const user = useStore((state) => state.user);
   const authStatus = useStore((state) => state.auth);
   const cartItems = useStore((state) => state.items);
-  const [userInfo, setUserInfo] = useState([]);
   const addButton = useRef(null);
 
   const settings = {
@@ -54,14 +54,6 @@ const products = () => {
         );
       })
       .catch((error) => console.log(error));
-
-    axios
-      .get("https://run-away-soles-backend.vercel.app/auth/login/success", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setUserInfo(response.data[0]);
-      });
   }, [id]);
 
   const handleAdd = (object) => {
@@ -70,7 +62,7 @@ const products = () => {
       if (!isAdded && !isDuplicate) {
         const updatedCart = [object, ...cartItems];
         axios.put(
-          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
+          `https://run-away-soles-backend.vercel.app/users/${user}/updateCartItems`,
           updatedCart
         );
         addItems(object);

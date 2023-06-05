@@ -5,18 +5,21 @@ import Hamburger from "hamburger-react";
 import { Link } from "react-router-dom";
 import useScrollToTop from "../hooks/useScrollToTop";
 import useStore from "../app/cartStore";
+import { auth } from "../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import axios from "axios";
 
 const header = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
   const cartItems = useStore((state) => state.items);
   const authStatus = useStore((state) => state.auth);
   const setItems = useStore((state) => state.setItems);
   const setOrders = useStore((state) => state.setOrders);
+  const setUser = useStore((state) => state.setUser);
   const PaymentSuccess = useStore((state) => state.paymentSuccess);
   const setPaymentStatus = useStore((state) => state.setPaymentStatus);
+  const [user, loading] = useAuthState(auth);
 
   const handleMenu = () => {
     setIsClicked(!isClicked);
@@ -24,28 +27,20 @@ const header = () => {
     useScrollToTop();
   };
   useEffect(() => {
-    let isMounted = true;
-
     const getUserInfoAndCartItems = async () => {
+      setUser(user?.uid);
       try {
-        const response = await axios.get(
-          "https://run-away-soles-backend.vercel.app/auth/login/success",
-          {
-            withCredentials: true,
-          }
-        );
-        const userInfo = await response?.data[0];
-        console.log(userInfo);
-        if (isMounted) {
-          setUserInfo(userInfo);
+        if (user?.uid) {
+          axios.get(
+            `https://run-away-soles-backend.vercel.app/auth/user?uid=${user?.uid}&photoURL=${user?.photoURL}&displayName=${user?.displayName}&email=${user?.email}`
+          );
         }
-
         const cartResponse = await axios.get(
-          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/cartItems`
+          `https://run-away-soles-backend.vercel.app/users/${user?.uid}/cartItems`
         );
         const cartItems = cartResponse?.data[0]?.cart;
         const orderResponse = await axios.get(
-          `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/orders`
+          `https://run-away-soles-backend.vercel.app/users/${user?.uid}/orders`
         );
         const orderItems = orderResponse?.data[0]?.orders;
 
@@ -54,11 +49,11 @@ const header = () => {
           setOrders(orderItems);
           setItems([]);
           axios.put(
-            `https://run-away-soles-backend.vercel.app/users/${userInfo._id}/updateOrders`,
+            `https://run-away-soles-backend.vercel.app/users/${user?.uid}/updateOrders`,
             [...cartItems, ...orderItems]
           );
           axios.put(
-            `https://run-away-soles-backend.vercel.app/users/${userInfo?._id}/updateCartItems`,
+            `https://run-away-soles-backend.vercel.app/users/${user?.uid}/updateCartItems`,
             []
           );
         } else {
@@ -66,18 +61,12 @@ const header = () => {
           setOrders(orderItems || []);
         }
       } catch (error) {
-        console.log("error happened at userInfo._id");
+        console.log(error);
       }
     };
 
-    if (!userInfo || !userInfo._id) {
-      getUserInfoAndCartItems();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [userInfo, PaymentSuccess]);
+    getUserInfoAndCartItems();
+  }, [user, PaymentSuccess]);
   return (
     <nav
       className={`navbar fixed top-0 z-10 flex w-screen justify-between bg-light-0 px-10 shadow-xl`}
