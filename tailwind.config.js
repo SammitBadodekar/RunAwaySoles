@@ -6,7 +6,7 @@ export default {
       colors: {
         light: ["white"],
         dark: ["black"],
-        menu: ["hsla(114, 61%, 94%, 0.135)"],
+        menu: ["hsla(0, 0%, 100%, 0.894)"],
         navbar: ["#0c134f"] /* #7158bb */,
         gradient1: ["radial-gradient(circle at top left, dark,menu)no-repeat"],
       },

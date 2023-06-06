@@ -1,7 +1,8 @@
 import useStore from "../app/cartStore";
 import { Link } from "react-router-dom";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import loginSvg from "../assets/svgs/6310507.jpg";
 import deleteSvg from "../assets/svgs/delete_FILL0_wght400_GRAD0_opsz48.svg";
 import axios from "axios";
 
@@ -97,7 +98,21 @@ const cart = () => {
       </section>
     );
   }
-  return <div className=" pt-20 text-3xl">Login to View Cart...</div>;
+  return (
+    <div className="flex flex-col items-center pt-16 text-xl">
+      <img
+        src={loginSvg}
+        alt="Login To Continue"
+        className=" h-80 w-screen object-contain"
+      />
+      <Link
+        to="/login"
+        className=" w-20 rounded-xl bg-navbar-0 p-2 text-light-0"
+      >
+        Login
+      </Link>
+    </div>
+  );
 };
 
 export default cart;

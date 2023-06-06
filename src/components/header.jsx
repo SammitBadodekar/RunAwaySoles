@@ -86,10 +86,9 @@ const header = () => {
       >
         <Link to="/">HOME</Link>
         <Link to="/shop">SHOP</Link>
-        <Link to="/orders">{authStatus ? "ORDERS" : ""}</Link>
+        <Link to="/orders">ORDERS</Link>
         <Link to="/login">{authStatus ? "PROFILE" : "LOGIN"}</Link>
       </div>
-
       <div className="flex gap-3">
         <Link to="/cart">
           <div className="relative flex gap-2">

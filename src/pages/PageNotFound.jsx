@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
+import pageNotFoundSvg from "../assets/svgs/3828537.jpg";
 
 const PageNotFound = () => {
   return (
-    <div className="grid justify-center gap-3 px-4 pt-20">
-      <h1 className=" font-logo">Somthing Went Wrong...</h1>
-      <Link to="/" className="bg-navbar-0 p-1 text-light-0">
-        Go to Home Page
+    <div className="flex flex-col items-center gap-3 px-4 pt-20">
+      <img src={pageNotFoundSvg} alt="" />
+      <Link
+        to="/"
+        className="w-20 rounded-xl bg-navbar-0 p-1 text-center font-heading text-light-0"
+      >
+        Home
       </Link>
     </div>
   );

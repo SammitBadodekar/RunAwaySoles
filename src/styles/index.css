@@ -13,7 +13,7 @@
   --extra-dark: black;
   --dark: #0c134f;
   --mid: #7158bb;
-  --menu: hsla(114, 61%, 94%, 0.135);
+  --menu: hsla(0, 0%, 100%, 0.794);
 }
 
 body {
@@ -35,10 +35,14 @@ body {
   background: url("../assets/svgs/1812875.webp") no-repeat fixed;
   background-size: cover;
 }
+.login {
+  background: url("../assets/svgs/pair-white-sneakers-bright-yellow-background-top-view-place-copy-healthy-lifestyle-concept_380694-10880.jpg")
+    no-repeat right;
+  background-size: cover;
+}
 
 .btn {
   background-color: var(--dark);
   color: var(--light);
   border-radius: 0.2rem;
-  font-family: "Roboto Mono", monospace;
 }
