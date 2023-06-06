@@ -3,7 +3,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FcGoogle } from "react-icons/fc";
-import { IoLogoFacebook } from "react-icons/Io";
 
 const login = () => {
   const loginSuccess = useStore((state) => state.login);
@@ -65,7 +64,6 @@ const login = () => {
           Google
         </button>
         <button className="m-2 flex w-52 items-center gap-2 rounded-lg bg-light-0 p-2 text-left shadow-xl sm:w-64">
-          <IoLogoFacebook />
           Facebook
         </button>
       </div>
