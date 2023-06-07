@@ -12,8 +12,8 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     setPaymentStatus(true);
-    axios.get("https://run-away-soles-backend.vercel.app/ordersuccess");
-  });
+    axios.get(`https://run-away-soles-backend.vercel.app/${user}/ordersuccess`);
+  }, [user]);
 
   return (
     <div className="grid gap-10 pt-20 text-center">
