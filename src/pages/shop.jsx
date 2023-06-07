@@ -3,7 +3,7 @@ import Footer from "../components/footer";
 
 const shop = () => {
   return (
-    <div className=" pt-10">
+    <div className=" pt-20">
       <h2 className="w-full pt-5 text-center font-heading text-3xl">
         skywalkers
       </h2>

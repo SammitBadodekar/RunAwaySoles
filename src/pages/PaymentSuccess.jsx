@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
+import axios from "axios";
 
 const PaymentSuccess = () => {
   const setPaymentStatus = useStore((state) => state.setPaymentStatus);
@@ -11,6 +12,7 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     setPaymentStatus(true);
+    axios.get("https://run-away-soles-backend.vercel.app/ordersuccess");
   });
 
   return (

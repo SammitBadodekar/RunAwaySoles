@@ -41,7 +41,7 @@ const login = () => {
   }
   if (authStatus) {
     return (
-      <div className="mx-4 mt-32 flex flex-col rounded-2xl p-4 shadow-2xl sm:m-12 sm:mx-40">
+      <div className="mx-4 mt-32 flex flex-col items-center rounded-2xl p-4 shadow-2xl sm:m-12 sm:mx-40">
         <div className=" h-28 w-28 animate-bounce self-center rounded-full bg-slate-100 shadow-xl"></div>
         <div className=" m-4 h-8 animate-bounce rounded-lg bg-slate-100 shadow-xl sm:mx-40"></div>
         <div className=" m-4 h-8 animate-bounce rounded-lg bg-slate-100 shadow-xl sm:mx-40"></div>

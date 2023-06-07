@@ -69,14 +69,10 @@ const header = () => {
   }, [user, PaymentSuccess]);
   return (
     <nav
-      className={`navbar fixed top-0 z-10 flex w-screen justify-between bg-light-0 px-10 shadow-xl`}
+      className={`navbar fixed top-0 z-10 flex w-screen justify-between bg-light-0 px-10 pt-8 shadow-xl sm:pt-0`}
     >
       <Link to="/" onClick={useScrollToTop}>
-        <img
-          src={logoImg}
-          alt=""
-          className="object-contains my-1 h-12 w-24 p-1"
-        />
+        <img src={logoImg} alt="" className="object-contains my-1 h-10 w-20" />
       </Link>
 
       <div
@@ -89,14 +85,10 @@ const header = () => {
         <Link to="/orders">ORDERS</Link>
         <Link to="/login">{authStatus ? "PROFILE" : "LOGIN"}</Link>
       </div>
-      <div className="flex gap-3">
+      <div className="flex items-center justify-center gap-3">
         <Link to="/cart">
           <div className="relative flex gap-2">
-            <img
-              src={shoppingCartSvg}
-              alt=""
-              className="h-12 w-12 pt-2 sm:h-12 sm:w-12 "
-            />
+            <img src={shoppingCartSvg} alt="" className="h-8 w-12 " />
             <span
               className={`absolute bottom-0 right-0 -my-1 h-fit w-fit rounded-full bg-navbar-0 px-2 font-paragraph text-sm text-light-0 sm:right-1  sm:-my-1 sm:px-1 ${
                 cartItems?.length === 0 ? "hidden" : ""
@@ -106,8 +98,7 @@ const header = () => {
             </span>
           </div>
         </Link>
-
-        <div className="hamburger-button z-10 py-3" onClick={handleMenu}>
+        <div className="hamburger-button z-10 " onClick={handleMenu}>
           <Hamburger color="#000" onClick={handleMenu} toggled={isOpen} />
         </div>
       </div>
