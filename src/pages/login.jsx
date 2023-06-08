@@ -3,7 +3,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FcGoogle } from "react-icons/fc";
-import { FaFacebookSquare } from "react-icons/fa";
 
 const login = () => {
   const loginSuccess = useStore((state) => state.login);
@@ -27,7 +26,7 @@ const login = () => {
   };
   if (authStatus && user) {
     return (
-      <div className="login flex h-screen items-start justify-start pt-28">
+      <div className="login flex h-screen items-start justify-center pt-28 sm:justify-start">
         <div className="mx-4 flex flex-col items-center justify-start gap-4 rounded-2xl bg-menu-0 p-4 shadow-2xl sm:mx-20">
           <img src={user?.photoURL} alt="" className=" rounded-full" />
           <h3>{user?.displayName}</h3>
@@ -53,20 +52,16 @@ const login = () => {
   }
   return (
     <div className="login flex h-screen justify-center gap-4 p-4 pt-20 sm:justify-start sm:p-8 sm:pt-20">
-      <div className=" flex h-80 w-96 flex-col items-center rounded-2xl bg-menu-0">
+      <div className=" flex h-fit flex-col items-center rounded-2xl bg-menu-0">
         <h1 className="w-full  text-center  font-heading text-3xl sm:w-80">
           Login
         </h1>
         <button
-          className="m-4 mt-16 flex w-52 items-center gap-2 rounded-lg bg-light-0 p-2 text-left shadow-xl sm:w-64"
+          className="m-4 mb-12 mt-16 flex w-52 items-center gap-2 rounded-lg border-2 bg-light-0 p-2 text-left shadow-xl sm:w-64"
           onClick={googleLogin}
         >
           <FcGoogle />
-          Google
-        </button>
-        <button className="m-2 flex w-52 items-center gap-2 rounded-lg bg-light-0 p-2 text-left shadow-xl sm:w-64">
-          <FaFacebookSquare />
-          Facebook
+          Login with Google
         </button>
       </div>
     </div>
