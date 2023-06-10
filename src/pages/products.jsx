@@ -68,7 +68,7 @@ const products = () => {
         addItems(object);
         toast("Item Added To Cart");
         setIsAdded(true);
-        if (addButton.current && !isAdded) {
+        if (addButton.current && !isAdded && !isDuplicate) {
           addButton.current.style.backgroundColor = "#383f84";
         }
       } else {
