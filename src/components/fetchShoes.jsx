@@ -8,10 +8,12 @@ const fetchShoes = (props) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    axios.get(`http://localhost:3000/${url}${name}`).then((response) => {
-      setItems(response.data);
-      setIsLoading(false);
-    });
+    axios
+      .get(`https://run-away-soles-backend.vercel.app/${url}${name}`)
+      .then((response) => {
+        setItems(response.data);
+        setIsLoading(false);
+      });
   }, []);
   if (isLoading) {
     return (

@@ -25,14 +25,17 @@ const cart = () => {
     removeItem(id);
     const updatedCart = cartItems.filter((item) => item._id !== id);
     axios.put(
-      `http://localhost:3000/users/${user}/updateCartItems`,
+      `https://run-away-soles-backend.vercel.app/users/${user}/updateCartItems`,
       updatedCart
     );
   };
 
   const checkOut = async () => {
     axios
-      .post(`http://localhost:3000/create-checkout-session`, cartItems)
+      .post(
+        `https://run-away-soles-backend.vercel.app/create-checkout-session`,
+        cartItems
+      )
       .then((response) => {
         window.location.href = response.data.url;
       });

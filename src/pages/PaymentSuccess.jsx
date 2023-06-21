@@ -12,7 +12,9 @@ const PaymentSuccess = () => {
 
   useEffect(() => {
     setPaymentStatus(true);
-    axios.get(`http://localhost:3000/${user?.email}/ordersuccess`);
+    axios.get(
+      `https://run-away-soles-backend.vercel.app/${user?.email}/ordersuccess`
+    );
   }, [user]);
 
   return (

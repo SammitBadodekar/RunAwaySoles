@@ -32,15 +32,15 @@ const header = () => {
       try {
         if (user?.uid) {
           axios.get(
-            `http://localhost:3000r?.uid}&photoURL=${user?.photoURL}&displayName=${user?.displayName}&email=${user?.email}`
+            `https://run-away-soles-backend.vercel.app/auth/user?uid=${user?.uid}&photoURL=${user?.photoURL}&displayName=${user?.displayName}&email=${user?.email}`
           );
         }
         const cartResponse = await axios.get(
-          `http://localhost:3000/users/${user?.uid}/cartItems`
+          `https://run-away-soles-backend.vercel.app/users/${user?.uid}/cartItems`
         );
         const cartItems = cartResponse?.data[0]?.cart;
         const orderResponse = await axios.get(
-          `http://localhost:3000/users/${user?.uid}/orders`
+          `https://run-away-soles-backend.vercel.app/users/${user?.uid}/orders`
         );
         const orderItems = orderResponse?.data[0]?.orders;
 
@@ -48,12 +48,12 @@ const header = () => {
           setPaymentStatus(false);
           setOrders(orderItems);
           setItems([]);
-          axios.put(`http://localhost:3000/users/${user?.uid}/updateOrders`, [
-            ...cartItems,
-            ...orderItems,
-          ]);
           axios.put(
-            `http://localhost:3000/users/${user?.uid}/updateCartItems`,
+            `https://run-away-soles-backend.vercel.app/users/${user?.uid}/updateOrders`,
+            [...cartItems, ...orderItems]
+          );
+          axios.put(
+            `https://run-away-soles-backend.vercel.app/users/${user?.uid}/updateCartItems`,
             []
           );
         } else {
