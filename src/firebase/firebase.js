@@ -2,13 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyANIJu9YXvLDXfPceFNeb3dOcTjTtlHj14",
-  authDomain: "runawaysoles-4e514.firebaseapp.com",
-  projectId: "runawaysoles-4e514",
-  storageBucket: "runawaysoles-4e514.appspot.com",
-  messagingSenderId: "43763524589",
-  appId: "1:43763524589:web:d7883208a1d4c1c83f7de4",
-  measurementId: "G-BQ5K724C8L",
+  apiKey: "AIzaSyB29SxFiMyZfn46x1idRnSpzkijY62h4Jg",
+  authDomain: "runawaysoles-59ae3.firebaseapp.com",
+  projectId: "runawaysoles-59ae3",
+  storageBucket: "runawaysoles-59ae3.appspot.com",
+  messagingSenderId: "364644241832",
+  appId: "1:364644241832:web:1400c770e5703166464d9d",
 };
 
 const app = initializeApp(firebaseConfig);

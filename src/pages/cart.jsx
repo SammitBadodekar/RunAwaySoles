@@ -1,16 +1,18 @@
 import useStore from "../app/cartStore";
 import { Link } from "react-router-dom";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import loginSvg from "../assets/svgs/6310507.jpg";
 import deleteSvg from "../assets/svgs/delete_FILL0_wght400_GRAD0_opsz48.svg";
 import axios from "axios";
 
 const cart = () => {
+  const [itemQuantity, setItemQuantity] = useState(null);
   const cartItems = useStore((state) => state.items);
   const authStatus = useStore((state) => state.auth);
   const user = useStore((state) => state.user);
   const removeItem = useStore((state) => state.removeItems);
+  const addItem = useStore((state) => state.addItems);
   let totalPrice = useMemo(() => {
     return cartItems?.reduce(
       (acc, item) => acc + parseInt(item?.price) * item.quantity,
@@ -23,17 +25,14 @@ const cart = () => {
     removeItem(id);
     const updatedCart = cartItems.filter((item) => item._id !== id);
     axios.put(
-      `https://run-away-soles-backend.vercel.app/users/${user}/updateCartItems`,
+      `http://localhost:3000/users/${user}/updateCartItems`,
       updatedCart
     );
   };
 
   const checkOut = async () => {
     axios
-      .post(
-        `https://run-away-soles-backend.vercel.app/create-checkout-session`,
-        cartItems
-      )
+      .post(`http://localhost:3000/create-checkout-session`, cartItems)
       .then((response) => {
         window.location.href = response.data.url;
       });
@@ -66,12 +65,15 @@ const cart = () => {
                     className=" h-20 w-16 rounded-md object-cover"
                   />
                 </Link>
-                <div className="flex flex-col ">
-                  <Link to={`/products/${item?._id}`}>
-                    <p>{item?.name}</p>
-                  </Link>
-                  <h2 className=" font-logo">${item?.price}</h2>
-                </div>{" "}
+                <div>
+                  <div className="flex flex-col ">
+                    <Link to={`/products/${item?._id}`}>
+                      <p>{item?.name}</p>
+                    </Link>
+                    <h2 className=" font-logo">${item?.price}</h2>
+                  </div>
+                </div>
+
                 <button
                   onClick={() => {
                     deleteItem(item?._id);

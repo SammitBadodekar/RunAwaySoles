@@ -46,7 +46,7 @@ const products = () => {
 
   useEffect(() => {
     axios
-      .get(`https://run-away-soles-backend.vercel.app/getShoes/specific/${id}`)
+      .get(`http://localhost:3000/getShoes/specific/${id}`)
       .then((response) => {
         setShoesInfo(response.data[0]);
         setShoesImgs(
@@ -62,7 +62,7 @@ const products = () => {
       if (!isAdded && !isDuplicate) {
         const updatedCart = [object, ...cartItems];
         axios.put(
-          `https://run-away-soles-backend.vercel.app/users/${user}/updateCartItems`,
+          `http://localhost:3000/users/${user}/updateCartItems`,
           updatedCart
         );
         addItems(object);
